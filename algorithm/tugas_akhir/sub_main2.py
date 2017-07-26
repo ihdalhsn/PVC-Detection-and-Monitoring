@@ -8,6 +8,7 @@
 import time
 import matplotlib.pyplot as plt
 import filtering as filt
+import math
 
 
 # start_time = time.time()
@@ -24,6 +25,7 @@ def main_test(lines,fig,data_title,signal_type):
     plt.title('Raw signal '+data_title)
     plt.plot(range(len(raw_signal)),raw_signal)
     len_sample = len(raw_signal)
+
     #___________________________________________2.1 ECG FILTERING___________________________________________________________
 
     ecg_der = filt.five_point_derivative(raw_signal)
@@ -32,7 +34,7 @@ def main_test(lines,fig,data_title,signal_type):
     # print ecg_adp
     # print "Derivative result : ", ecg_der
     plt.subplot(312); plt.tight_layout()
-    plt.plot(range(len(ecg_der)),ecg_der)
+    plt.plot(range(len(ecg_adp)),ecg_adp)
     plt.title('Derivative Result')
 
     #___________________________________________2.1 FEATURE EXTRACTION__________________________________________________
@@ -40,7 +42,7 @@ def main_test(lines,fig,data_title,signal_type):
     sampled_window = len_sample
     sample = []
     for i in range(sampled_window):
-        sample.append(ecg_adp[i])
+        sample.append(ecg_adp[i-1])
     # plt.figure(fig+1)
     plt.subplot(313); plt.tight_layout()
     plt.plot(range(len(sample)),sample)
@@ -67,10 +69,16 @@ def main_test(lines,fig,data_title,signal_type):
                     r_peaks.append(r_detect)
                     list_upper = []
 
-    # 3. Calculate RR Interval & SET PQST peak
+# 3. Calculate RR Interval & SET P Q S T peak
     print "Total R peaks : ", len(r_peaks)
 
     print r_peaks
+    pr_list = []
+    qrs_list = []
+    qt_list = []
+    qt_corr = []
+    bpm_list = []
+    fs = 360
     for i in range(len(r_peaks) - 1):
         r1 = r_peaks[i][0]
         r2 = r_peaks[i + 1][0]
@@ -95,13 +103,13 @@ def main_test(lines,fig,data_title,signal_type):
         t_peak = max(t_list)
         t_in   = sample.index(t_peak)
         t_plot = plt.plot(t_in, t_peak, 'g.', markersize=8) #Plot the T peak
-        print "T Peak   : ", t_peak
+        print "T Peak   : ", t_in
 
         # SET P
-        p_on  = (65 * rr)/100
-        p_on  = p_on + r1
-        p_off = (95 * rr)/100
-        p_off = p_off + r1
+        p_on  = (35 * rr)/100
+        p_on  = r1 - p_on
+        p_off = (5 * rr)/100
+        p_off = r1 - p_off
         print "P onset  : ", p_on
         print "P offset : ", p_off
         # plt.axvspan(p_on, p_off, facecolor='#ff9999', alpha=0.5)
@@ -112,8 +120,8 @@ def main_test(lines,fig,data_title,signal_type):
             t += 1
         p_peak = max(t_list)
         p_in   = sample.index(p_peak)
-        p_plot = plt.plot(p_in, p_peak, 'b.', markersize=8) #Plot the T peak
-        print "P Peak   : ", p_peak
+        p_plot = plt.plot(p_in, p_peak, 'b.', markersize=8) #Plot the P peak
+        print "P Peak   : ", p_in
 
         # SET S
         s_on  = r1
@@ -128,12 +136,13 @@ def main_test(lines,fig,data_title,signal_type):
             t += 1
         s_peak = min(t_list)
         s_in   = sample.index(s_peak)
-        s_plot = plt.plot(s_in, s_peak, 'y.', markersize=8) #Plot the T peak
-        print "S Peak   : ", s_peak
+        s_plot = plt.plot(s_in, s_peak, 'y.', markersize=8) #Plot the S peak
+        print "S Peak   : ", s_in
 
         # SET Q
-        q_on  = p_off
-        q_off = r2
+        q_on  = (5 * rr)/100
+        q_on  = r1 - q_on
+        q_off = r1
         print "Q onset  : ", q_on
         print "Q offset : ", q_off
         # plt.axvspan(q_on, q_off, facecolor='#ffffff', alpha=0.5)
@@ -144,5 +153,40 @@ def main_test(lines,fig,data_title,signal_type):
             t += 1
         q_peak = min(t_list)
         q_in   = sample.index(q_peak)
-        q_plot = plt.plot(q_in, q_peak, 'r.', markersize=8) #Plot the T peak
-        print "Q Peak   : ", q_peak
+        q_plot = plt.plot(q_in, q_peak, 'r.', markersize=8) #Plot the Q peak
+        print "Q Peak   : ", q_in
+
+
+# 4. ECG Timing Intervals Calculations
+        # PR Interval
+        t_pr = r1 - p_in
+        pr_list.append(t_pr)
+        print "PR Interval : ", t_pr
+
+        # QRS Duration
+        x = (6.65/100)*rr
+        t_qrs = (s_in + x)-(q_in - x)
+        qrs_list.append(t_qrs)
+        print "QRS Duration : ", t_qrs
+
+        #QT Interval
+        t_qt = t_in + (rr * 0.13) - (q_in - x)
+        qt_list.append(t_qt)
+        print "QT Interval : ", t_qt
+
+        #QT Corrected
+        t_qt_corr = t_qt / (fs * math.sqrt(rr))
+        qt_corr.append(t_qt_corr)
+        print "QT Corrected : ", t_qt_corr
+
+        #Vent Rate
+        bpm = (fs/rr)*60
+        bpm_list.append(bpm)
+        print "BPM : ", bpm
+
+    print "======= INTERVALS ==========="
+    print pr_list, len(pr_list)
+    print qrs_list, len(qrs_list)
+    print qt_list, len(qt_list)
+    print qt_corr, len(qt_corr)
+    print bpm_list, len(bpm_list)
