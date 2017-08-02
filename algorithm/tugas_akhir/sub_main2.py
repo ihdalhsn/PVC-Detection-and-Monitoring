@@ -11,11 +11,12 @@ import filtering as filt
 import math
 
 
+
 # start_time = time.time()
 # f = open('data/108_350_400.csv', 'r')
 # lines = f.readlines()
 # f.close()
-def main_test(lines,fig,data_title,signal_type):
+def main_test(lines,fig,data_title,signal_type,file_result):
     # Discard the first two lines because of header. Takes either column 1 or 2 from each lines (different signal lead)
     raw_signal = [0]*(len(lines)-2)
     for i in xrange(len(raw_signal)):
@@ -73,16 +74,19 @@ def main_test(lines,fig,data_title,signal_type):
     print "Total R peaks : ", len(r_peaks)
 
     print r_peaks
+    rr_list = []
     pr_list = []
     qrs_list = []
     qt_list = []
     qt_corr = []
     bpm_list = []
     fs = 360
+    # LOOPING TO GAIN PQST PEAK AND IT'S INTERVAL
     for i in range(len(r_peaks) - 1):
         r1 = r_peaks[i][0]
         r2 = r_peaks[i + 1][0]
         rr = r2 - r1
+        rr_list.append(rr)
         print "======= Beat ", i + 1, " to Beat ",i+2, " ========="
         print "R1 : ", r1
         print "R2 : ", r2
@@ -157,20 +161,20 @@ def main_test(lines,fig,data_title,signal_type):
         print "Q Peak   : ", q_in
 
 
-# 4. ECG Timing Intervals Calculations
+        # 4. ECG Timing Intervals Calculations
         # PR Interval
-        t_pr = r1 - p_in
+        t_pr = (r1 - p_in)/fs
         pr_list.append(t_pr)
         print "PR Interval : ", t_pr
 
         # QRS Duration
         x = (6.65/100)*rr
-        t_qrs = (s_in + x)-(q_in - x)
+        t_qrs = ((s_in + x)-(q_in - x))/fs
         qrs_list.append(t_qrs)
         print "QRS Duration : ", t_qrs
 
         #QT Interval
-        t_qt = t_in + (rr * 0.13) - (q_in - x)
+        t_qt = (t_in + (rr * 0.13) - (q_in - x))/fs
         qt_list.append(t_qt)
         print "QT Interval : ", t_qt
 
@@ -183,10 +187,58 @@ def main_test(lines,fig,data_title,signal_type):
         bpm = (fs/rr)*60
         bpm_list.append(bpm)
         print "BPM : ", bpm
+    # END LOOPING TO GAIN PQST PEAK AND IT'S INTERVAL
 
+    # LOOPING TO GAIN PQST INTERVAL MEAN
     print "======= INTERVALS ==========="
-    print pr_list, len(pr_list)
-    print qrs_list, len(qrs_list)
-    print qt_list, len(qt_list)
-    print qt_corr, len(qt_corr)
-    print bpm_list, len(bpm_list)
+    print rr_list, len(rr_list)
+    rr_temp = 0; pr_temp = 0 ; qrs_temp = 0; qt_temp = 0; qtcorr_temp = 0; bpm_temp = 0
+    for k in range(len(rr_list)):
+        rr_temp     = rr_temp + rr_list[k]
+        pr_temp     = pr_temp + pr_list[k]
+        qrs_temp    = qrs_temp + qrs_list[k]
+        qt_temp     = qt_temp + qt_list[k]
+        qtcorr_temp = qtcorr_temp + qt_corr[k]
+        bpm_temp    = bpm_temp + bpm_list[k]
+
+    qtcorr_mean = float(qtcorr_temp)/float(len(qt_corr))
+    rr_mean     = float(rr_temp)/float(len(rr_list))
+    print "RR Mean  : ", rr_mean
+    print "PR Mean  : ", float(pr_temp)/float(len(pr_list))
+    print "QRS Mean : ", float(qrs_temp)/float(len(qrs_list))
+    print "QT Mean  : ", float(qt_temp)/float(len(qt_list))
+    print "QT Corr Mean : ", qtcorr_mean
+    print "BPM Mean : ", float(bpm_temp)/float(len(bpm_list))
+    # END LOOPING TO GAIN PQST INTERVAL MEAN
+
+
+    #Detection by QT Correction
+    message = ""
+    for j in range(len(qt_corr)):
+        if(qt_corr[j] < qtcorr_mean ):
+            message = "Ventricular Arrhytmia Detected"
+        else:
+            message = "Normal"
+        print "============= MESSAGE ==========="
+        print message
+
+
+    #DETECTION PREMATURITY & COMPENSATORY PAUSE (PEDRO2014)
+    print "============= CLASSIFICATION : PEDRO 2014 ==========="
+
+    for i in range(len(rr_list)):
+        prematurity = float(rr_mean - rr_list[i])/float(rr_mean)
+        print "Prematurity ",i+1," : ", prematurity
+
+        if(i+1 < len(rr_list)):
+            compensatory_pause = float(rr_list[i+1] - rr_mean)/float(rr_mean)
+            print "Compensatory ",i+1," : ", compensatory_pause
+
+        if(prematurity > 0):
+            message = "Ventricular Arrhytmia Detected"
+        else:
+            message = "Normal"
+        print message
+        file_result.write(message)
+        file_result.write("\n")
+    file_result.close()

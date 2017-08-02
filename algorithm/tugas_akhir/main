@@ -6,6 +6,8 @@
 # 108_350_400.csv => record ke 108, MLII, durasi 3:50 - 4:00, PVC on beat- 3
 # '108_450_500.csv','105_2650_2700.csv', '107_1230_1240.csv'
 # ______________________________________________________________________________________________________________________
+
+# from __future__ import division
 import time
 import sub_main2
 import matplotlib.pyplot as plt
@@ -19,17 +21,15 @@ real_time = 0
 signal_type = MLII
 start_time = time.time()
 for i in range(len(data)):
+        print "========================================================================================================="
         print "Read Data : ", data[i]
         read_data = 'data/' + data[i];
         f = open(read_data, 'r')
         lines = f.readlines()
         f.close()
-        sample = sub_main2.main_test(lines,i,read_data,signal_type)
+        file_result = open('hasil/'+data[i]+'.txt', 'w')
+        sample = sub_main2.main_test(lines,i,read_data,signal_type,file_result)
 
-from matplotlib.patches import Rectangle
-someX, someY = 2, 3
-currentAxis = plt.gca()
-currentAxis.add_patch(Rectangle((someX - .5, someY - .5), 1, 1, facecolor="grey"))
 # _________________________________________________ESTIMATED TIME_______________________________________________________
 
 print "============= RESPON TIME ============================="

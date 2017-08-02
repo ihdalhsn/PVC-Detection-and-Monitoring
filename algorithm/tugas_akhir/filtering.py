@@ -1,11 +1,17 @@
+from numpy import diff
 
 #====================================== DERIVATIVE AND ADAPTIVE FILTERING ==============================================
 # Formula : H(z) = 0.1*(2+z^-1 - z^-2 - z^-3) #Five point derivative
+def derivative(raw_signal):
+    der = diff(raw_signal)
+    return der
+
 def five_point_derivative(raw_signal):
     ecg_der = []
     for i in xrange(len(raw_signal)):
         der = 0.1 * 2 * (raw_signal[i] + raw_signal[i-1] - raw_signal[i-3] - raw_signal[i-4])
         ecg_der.append(der)
+
     return ecg_der
 
 def adaptive_filter(ecg_der):
