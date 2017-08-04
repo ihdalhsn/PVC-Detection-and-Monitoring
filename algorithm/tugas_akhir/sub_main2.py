@@ -212,20 +212,26 @@ def main_test(lines,fig,data_title,signal_type,file_result):
     # END LOOPING TO GAIN PQST INTERVAL MEAN
 
 
-    #Detection by QT Correction
-    message = ""
+    #DETECTION BY QT CORRECTION (NOVELWINDOWING2014)
+    count_normal = 0
+    count_pvc    = 0
     for j in range(len(qt_corr)):
         if(qt_corr[j] < qtcorr_mean ):
             message = "Ventricular Arrhytmia Detected"
+            count_pvc += 1
         else:
             message = "Normal"
+            count_normal += 1
         print "============= MESSAGE ==========="
         print message
-
+    file_result.write("====== Novel Windowing Algorithm 2014 ======\n")
+    file_result.write("Normal beat : "+ str(count_normal)+"\n")
+    file_result.write("PVC beat : "+ str(count_pvc)+"\n")
 
     #DETECTION PREMATURITY & COMPENSATORY PAUSE (PEDRO2014)
     print "============= CLASSIFICATION : PEDRO 2014 ==========="
-
+    count_normal = 0
+    count_pvc    = 0
     for i in range(len(rr_list)):
         prematurity = float(rr_mean - rr_list[i])/float(rr_mean)
         print "Prematurity ",i+1," : ", prematurity
@@ -236,9 +242,12 @@ def main_test(lines,fig,data_title,signal_type,file_result):
 
         if(prematurity > 0):
             message = "Ventricular Arrhytmia Detected"
+            count_pvc += 1
         else:
             message = "Normal"
+            count_normal += 1
         print message
-        file_result.write(message)
-        file_result.write("\n")
-    file_result.close()
+    file_result.write("====== PEDRO 2014 ======\n")
+    file_result.write("Normal beat : "+ str(count_normal) +"\n")
+    file_result.write("PVC beat : "+ str(count_pvc) +"\n")
+

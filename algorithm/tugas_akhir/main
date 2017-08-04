@@ -12,8 +12,10 @@ import time
 import sub_main2
 import matplotlib.pyplot as plt
 
-data = ['105_010_020.csv','102_930_940.csv']
+path = 'data/PVC/'
+# data = ['100.csv','101.csv','105.csv']
 # data = ['husna3.csv', 'rifah6.csv']
+data = ['102_128.csv','108_450_500.csv','105_2650_2700.csv', '107_1230_1240.csv']
 V         = 2
 MLII      = 1
 real_time = 0
@@ -23,12 +25,13 @@ start_time = time.time()
 for i in range(len(data)):
         print "========================================================================================================="
         print "Read Data : ", data[i]
-        read_data = 'data/' + data[i];
+        read_data = path + data[i];
         f = open(read_data, 'r')
         lines = f.readlines()
         f.close()
         file_result = open('hasil/'+data[i]+'.txt', 'w')
         sample = sub_main2.main_test(lines,i,read_data,signal_type,file_result)
+        file_result.close()
 
 # _________________________________________________ESTIMATED TIME_______________________________________________________
 
