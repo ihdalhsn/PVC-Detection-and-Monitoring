@@ -1,0 +1,54 @@
+{\centering
+\iflogTA
+\textbf{\large Lembar Pengesahan}\\  %UNTUK TA
+\else
+\textbf{\large Lembar Persetujuan}\\
+\fi
+\vspace{0.5cm}
+\textbf{\Title}\\
+\vspace{0.5cm}
+\textbf{\textit{\EngTitle}}\\
+\vspace{0.5cm}
+\textbf{\Author}\\
+\textbf{NIM: \NIM}\\
+\vspace{1cm}
+
+\iflogTA 
+{ Tugas Akhir ini diterima dan disahkan untuk memenuhi sebagian dari syarat untuk memperoleh gelar sarjana \Gelar\\ Program Studi Sarjana \Prodi\\ Fakultas Informatika Universitas Telkom}\\  %% UNTUK TA
+\else
+{ Proposal ini diajukan sebagai usulan pembuatan tugas akhir pada\\ Program Studi Sarjana \Prodi\\ Fakultas Informatika Universitas Telkom}\\
+\fi
+\vspace{0.5cm}
+
+{Bandung, \Tanggal\quad \Bulan \quad \Date}\\
+{Menyetujui}\\
+
+\vspace{0.5cm}
+\iflogTA
+\begin{center}
+\begin{tabular}{  m{8cm}  m{8cm} }
+Pembimbing 1 & Pembimbing 2
+\end{tabular}
+\end{center}
+\else
+\begin{center}
+\begin{tabular}{  m{8cm}  m{8cm} }
+Calon Pembimbing 1 & Calon Pembimbing 2
+\end{tabular}
+\end{center}
+\fi
+\begin{center}
+\vspace{2cm}
+\begin{tabular}{  m{8cm}  m{8cm} }
+\underline{\PembimbingSatu} & \underline{\PembimbingDua} \\ 
+NIP: \NIPPembimbingSatu & NIP: \NIPPembimbingDua
+\end{tabular}
+\end{center}
+\vspace{0.5cm}
+\iflogTA
+Mengesahkan,\\   %% UNTUK TA
+Kepala Program Studi \Prodi\\ %% UNTUK TA
+\vspace{2.5cm}   %% UNTUK TA
+\underline{\Kaprodi}\\ NIP: \NIPKaprodi\\  %% UNTUK TA
+\fi
+}

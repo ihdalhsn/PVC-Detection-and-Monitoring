@@ -1,0 +1,89 @@
+\chapter{Metodologi dan Perancangan Sistem}
+\section{Metodologi}
+\subsection{Riset \textit{Framework}}
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[scale=0.6]{metode-penelitian2.png}
+		\caption{Metode Penelitian}
+		\label{fig:my_method}
+	\end{figure}
+	
+	Keterangan : 
+	\begin{enumerate}
+	\item Studi Literatur
+	 \subitem Pada tahap ini dilakukan review terhadap penelitian-penelitian yang telah dilakukan sebelumnya. Dilakukan dengan membaca jurnal dan artikel yang berkaitan. Pada tahap ini juga penulis menganalisis masalah dan membuat alasan mengapa masalah tersebut perlu diselesaikan.
+	\item Eksperiment Algoritma yang Sudah Ada
+	\subitem Melakukan eksperimen terhadap algoritma yang disebutkan dalam literatur yaitu algoritma Empirical Mode Decomposition(EMD).
+	\item Analisis Metode
+	\subitem Tahap ini adalah tahap analisis metode yang digunakan dalam eksperimen dan bertujuan untuk mengetahui performansi metode tersebut.
+	\item Pengembangan Algoritma
+	\subitem Tahap ini adalah tahap perumusan dan pengembangan terhadap algoritma EMD yang telah diterapkan sebelumnya.
+	\item Uji Algoritma
+	\subitem Melakukan pengujian terhadap algoritma yang baru berdasarkan metrik-metrik yang sudah ada
+	\item Membandingkan Algoritma
+	\subitem Melakukan perbandingan terhadap algoritma yang diusulkan dengan algoritma lain yang menggunakan algoritma klasifikasi sama dan membandingkan algoritma yang dikembangkan dengan algoritma yang sama yang telah dikembangkan pula.
+	\item Analisis Hasil
+	\subitem Melakukan analisis terhadap hasil uji algoritma yang dikembangkan
+	
+	\end{enumerate}
+\subsection{Data}
+Data yang digunakan dalam melakukan penelitian ini adalah sebanyak 48 data elektrokardiogram dari \textit{databse} MIT-BIH, yaitu pada rekaman data ke-100 hingga rekaman data ke-234 \cite{mit-bih}.
+	
+\subsection{Spesifikasi Perangkat}
+Pada penelitian ini digunakan perangkat sebagai berikut :
+	\begin{enumerate}
+		\item Spesifikasi Perangkat Keras
+		\subitem - Laptop Processor Intel(R) Core(TM) i3-2330M @2.20GHz
+		\subitem - Memory 4GB 
+		\subitem - Hard Drive 250GB
+		\item Spesifikasi Perangkat Lunak
+		\subitem - Windows 10 Education
+		\subitem - Matlab R2015b
+ 
+	\end{enumerate} 
+
+	
+\subsection{Metrik}
+Metrik yang digunakan dalam melakukan pengukuran algoritma adalah metrik yang juga digunakan pada penelitian-penelitian sebelumnya \cite{Karpagachelvi2010,yasinKaya}. Meliputi akurasi, spesifikasi, dan sensitivitas.
+
+\subparagraph {Persamaan Akurasi}
+\begin{equation}\label{akurasi}
+%\int_0^1 \frac{f(x)}{g(x)}\ {\rm dx}=\sin x
+accuracy = \frac{TP + TN}{TP+FP+FN+TN}
+\end{equation}
+
+\subparagraph {Persamaan Spesifikasi}
+\begin{equation}\label{spesifikasi}
+specificity = \frac{TN}{TN+FP}
+\end{equation}
+
+\subparagraph {Persamaan Sensitivitas}
+\begin{equation}\label{sensitivitas}
+sensitivity = \frac{TP}{TP+FN}
+\end{equation}
+
+Di mana TP dan TN melambangkan total dari kebenaran klasifikasi denyut PVC (true positif) dan sebanyak N denyut (true negatif) sampel. Sedangkan FP dan FN melambangkan jumlah dari kesalahan klasifikasi sampel denyut PVC (false positif) dan N denyut (False negative) sampel\cite{yasinKaya}
+
+\subsection{Perbandingan Sistem yang Telah Ada}
+Sistem ini akan dibandingkan dengan sistem deteksi PVC lain yang menggunakan \textit{classifier} sama yaitu ANN\cite{Arief2015,Sreelakshmi} dan pada penelitian yang sebelumnya telah menggunakan EMD sebagai \textit{feature extraction} pada deteksi AF\cite{UMaji}.
+
+
+\section{Rancangan sistem}
+\subsection{Arsitektur}
+Berikut adalah rancangan sistem yang akan dibuat
+
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[scale=0.5]{sistem.png}
+		\caption{Rancangan Sistem}
+		\label{fig:my_sistem}
+	\end{figure}
+
+Gambar di atas adalah rancangan umum metode deteksi PVC. Tahap pertama yang dilakukan adalah \textit{pre-processing} ECG yang termasuk di dalamnya adalah \textit{beat parsing, denoising} hingga mendapatkan sinyal yang bersih untuk masuk dalam tahap ekstraksi fitur. Selanjutnya adalah tahap \textit{feature extraction} yang menggunakan algoritma EMD untuk memperoleh bentuk dari gelombang PVC seperti posisi titik R, lebar gelombang QRS dan sebagainya. Berikutnya nilai dari \textit{feature extraction} yang di dapat akan menjadi masukan bagi \textit{classifier} ANN sebagai informasi gelombang PVC yang harus dibaca. Selanjutnya ANN akan membaca semua data gelombang yang masuk dan mendefinisikan gelombang yang termasuk PVC dan yang bukan PVC. Tahap terakhir adalah validasi yang dilakukan untuk memastikan luaran yang didapatkan adalah valid dan sekaligus mengukur nilai akurasi, sensitivitas, dan spesifikasi.
+\subsection{Algoritma}	
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.6]{algo-emd.png}
+	\caption{Algoritma EMD\cite{UMaji}}
+	\label{fig:emd_algo}
+\end{figure}

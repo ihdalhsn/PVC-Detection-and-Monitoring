@@ -1,0 +1,95 @@
+\begin{thebibliography}{10}
+
+\bibitem{s.a.Taouli}
+{\em Detection of QRS Complexes in ECG Signals Based on Empirical Mode
+  Decomposition}.
+
+\bibitem{sads}
+Warning signs of sads.
+
+\bibitem{heart_act}
+Cardiology teaching package.
+
+\bibitem{A.Ouelli2012_AR}
+{\sc A.Ouelli}.
+\newblock Ar modeling for cardiac arrhythmia classification using mlp neural
+  networks.
+
+\bibitem{Chang1987}
+{\sc Chang, W.~H.}
+\newblock A realtime feature extraction method for pvc detection in bedside
+  monitor.
+
+\bibitem{Pedro2014}
+{\sc Cuesta, P.}
+\newblock Detection of premature ventricular contractions using the rr-interval
+  signal: A simple algorithm for mobile devices.
+
+\bibitem{Ucuk}
+{\sc Darusalam, U.}
+\newblock Wavelet transform : Overview teknis.
+
+\bibitem{Huang2015Thesis}
+{\sc Dong, H.}
+\newblock Ecg pvc classification algorithm based on fusion svm and wavelet
+  transform.
+
+\bibitem{fahruzi}
+{\sc Fahruzi, I.}
+\newblock Deteksi ketidaknormalan premature ventricle contractions(pvcs)
+  berdasarkan rr interval dan correlation coefficient.
+
+\bibitem{Kanwar2015}
+{\sc Kanwar, G.}
+\newblock A review : Detection of premature ventricular contraction beat of
+  ecg.
+\newblock 4.
+
+\bibitem{Lekuthai2014}
+{\sc Lek-uthai, A.}, Ed.
+\newblock {\em Algorithm Development for Real-time Detection od Premature
+  Ventricular Contraction\/} (2014), IEEE.
+
+\bibitem{RobertChen}
+{\sc Ming-Fan~Wei, Kuang-Hao~Lin, S.-R.~C.}, Ed.
+\newblock {\em High-Precision Real-Time Premature Ventricular Contraction (PVC)
+  Detection System Based on Wavelet Transform}.
+
+\bibitem{mit-bih}
+{\sc Moody, G.~B.}
+\newblock Mit-bih arhythmia database directory.
+
+\bibitem{Arief2015}
+{\sc Nugroho, A.~A.}, Ed.
+\newblock {\em Premature Ventricular Contraction Detection Using Artificial
+  Neural Network Developed in Android Application}.
+
+\bibitem{khandait2012}
+{\sc P.D.Khandait, N.G.~Bawane, S.}, Ed.
+\newblock {\em Feature Extraction of ECG Signal for Detecting Cardiac
+  Arrhytmias}.
+
+\bibitem{rameshwari}
+{\sc Rameshwari S~Mane1, A N~Cheeran2, V. D.~A., and Rani, P.}
+\newblock Cardiac arrhythmia detection by ecg feature extraction.
+
+\bibitem{Karpagachelvi2010}
+{\sc S.~Karpagachelvi, Dr.M.Arthanari, P. . H.~M.}
+\newblock Ecg feature extractions techiques - a survey approach.
+\newblock No.~1, p.~5.
+
+\bibitem{Sreelakshmi}
+{\sc Sreelakshmi~TG, S.~P.}
+\newblock An accurate ecg feature extraction method for detecting multiple
+  cardiovascular diseases.
+
+\bibitem{UMaji}
+{\sc U~Maji, M~Mitra, S.~P.}, Ed.
+\newblock {\em Automatic Detection of Atrial Fibrillation using Empirical Mode
+  Decomposition and Statistical Approach\/} (2013).
+
+\bibitem{yasinKaya}
+{\sc Yasin~Kaya, H.~P.}, Ed.
+\newblock {\em Classicfication of Premature Ventricular Contraction in ECG}.
+
+\end{thebibliography}

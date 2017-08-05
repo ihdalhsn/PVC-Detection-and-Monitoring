@@ -1,0 +1,61 @@
+\chapter{Pendahuluan}
+\section{Latar Belakang}
+Berdasarkan survey SADS Foundation USA, setiap tahun sedikitnya terdapat 350.000 orang meninggal akibat SADS \textit{(Sudden Arryhthmia Death Syndromes)} dan 4.000 diantaranya berusia dibawah 35 tahun \cite{sads}. \textit{Arryhthmia} adalah kelainan yang terjadi pada arus listrik jantung sehingga dapat menyebabkan denyut jantung menjadi tidak normal. Salah satu jenis \textit{arryhthmia} adalah PVC \textit{Premature Ventricular Contractions}.
+
+PVC adalah kelainan denyut jantung yang disebabkan kontraksi ventrikel jantung yang tidak normal. Bagi orang yang tidak memiliki riwayat penyakit jantung, gejala PVC tidak dapat dirasakan dengan pasti. Walaupun tergolong kelainan jantung ringan, tetapi jika dibiarkan PVC dapat menjadi gejala awal kelainan jantung lain yang lebih serius\cite{RobertChen,Pedro2014} seperti VT \textit{Ventricular Tachycardia} atau VF \textit{Ventricular Fibrillation} yang dapat berujung pada kematian mendadak atau serangan jantung. Sejauh ini teknologi yang masih efektif digunakan untuk mendiagnosa terjadinya PVC adalah menggunakan pembacaan sinyal Elektrokardiogram (EKG)\cite{Karpagachelvi2010,RobertChen,Sreelakshmi}, namun sayangnya pembacaan sinyal EKG dan diagnosa terhadap sinyal tersebut hanya dapat dilakukan oleh dokter spesialis jantung atau ahli medis yang mempelajari bagaimana membaca EKG. 
+
+Saat ini telah banyak penelitian yang mengusulkan metode deteksi PVC secara otomatis menggunakan pembacaan EKG yang pada umumnya metode deteksi ini terdiri dari 4 tahap yaitu \textit{pre-processing} sinyal EKG, \textit{Feature extraction, classification}, dan \textit{validation}. Tahap \textit{pre-processing} adalah tahap awal untuk menghilangkan \textit{noise} pada sinyal dan mengubah data sinyal menjadi data diskrit yang akan diolah pada proses selanjutnya. Tahap kedua \textit{feature extraction} adalah tahap identifikasi bentuk dan nilai-nilai sinyal EKG yang kemudian akan menjadi nilai masukan pada tahap \textit{classification}. Tahap \textit{feature extraction} merupakan tahap yang penting karena nilai akurasi pada tahap ini akan menentukan nilai akurasi keseluruhan proses deteksi \cite{Sreelakshmi,RobertChen}. Kemudian tahap ketiga adalah tahap \textit{classification}. Tujuan dari tahap ini adalah untuk menentukan hasil dari pembacaan pola sinyal EKG yang telah dilakukan apakah termasuk dalam kategori PVC atau bukan. Tahap terkahir yaitu \textit{validation} bertujuan untuk mengevaluasi data dari tahap awal hingga akhir dan menyesuaikan dengan hasil akhir yang diinginkan. Dalam tugas akhir ini penulis akan lebih fokus pada tahap \textit{feature extraction} karena tahap ini merupakan tahap awal yang penting yang akan menentukan akurasi pada tahap \textit{classification}.Oleh karena itu menggunakan algoritma yang tepat dan akurat untuk tahap \textit{feature extraction} menjadi sangat penting untuk dilakukan.
+
+Salah satu algoritma yang banyak digunakan dalah proses \textit{feature extraction} adalah \textit{Wavelet Transform}. Algoritma ini dapat memberikan nilai akurasi yang tinggi namun sayangnya algoritma ini tidak cukup sederhana, karena algoritma \textit{Wavelet Transform} telah banyak direkonstruksi dengan tujuan untuk meningkatkan kualitas akurasi yang dihasilkannya\cite{Ucuk}. Selain itu jika algoritma \textit{feature extraction} disandingkan dengan algoritma \textit{classification} yang dapat memberikan nilai akurasi tinggi, maka nilai akurasi dari algoritma \textit{feature extraction} tidak akan banyak berpengaruh terhadap hasil deteksi \cite{yasinKaya}.
+
+Pada tugas akhir ini penulis akan melakukan eksperimen dengan algoritma  \textit{Empirical Mode Decomposition} pada tahap \textit{feature extraction} dalam proses deteksi PVC. EMD adalah salah satu algoritma yang cukup adaptif dan sangat efisien dalam melakukan ekstraksi fitur pada sinyal EKG seperti yang telah dilakukan oleh UMaji\cite{UMaji} pada kasus deteksi \textit{arryhthmia Ventricular Fibrillation} dan memiliki performansi 99.89 dalam penelitian yang dilakukan oleh S.A. Taouli\cite{s.a.Taouli}. Penelitian dengan EMD ini memberikan nilai sensitivitas dan spesifikasi yang tinggi tetapi sayangnya tidak tercantum hasil akurasi yang diperoleh dari keseluruhan proses deteksi. Karena itu penulis tertarik untuk mengembangkan algoritma EMD ini untuk mendeteksi PVC. 
+
+\section{Pernyataan Masalah}
+Berdasarkan latar belakang di atas, dapat disimpulkan terdapat permasalahan pada algoritma ekstraksi ciri dan deteksi yang sudah ada sebagai berikut :
+\begin{enumerate}
+	\item
+\end{enumerate}
+
+\section{Perumusan Masalah}
+\begin{enumerate}
+    \item Bagaimana menerapkan dan menganalisis algoritma ekstraksi ciri yang tepat untuk deteksi PVC secara \textit{real time}?
+    \item Bagaimana menentukan variabel ekstraksi ciri yang tepat untuk deteksi PVC secara \textit{real time}?
+    \item Bagaimana menghitung nilai akurasi deteksi PVC berdasarkan algoritma ekstraksi ciri yang digunakan?
+\end{enumerate}
+
+\section{Tujuan}
+\begin{enumerate}
+    \item Menerapkan algoritma ekstraksi ciri yang tepat untuk melakukan deteksi PVC secara \textit{real time}
+    \item Menentukan varibel ekstraksi ciri yang tepat untuk deteksi PVC secara \textit{real time}
+    \item Menghitung nilai akurasi deteksi PVC berdasarkan algoritma ekstraksi ciri yang digunakan
+\end{enumerate}
+
+\section{Hipotesa}
+	Algoritma \textit{adaptive thresholding} dan \textit{windowing} akan menghasilkan variabel ekstraksi ciri yang cukup akurat jika diterapkan dalam jumlah sampel yang kecil maupun besar.
+
+\section{Ruang Lingkup}
+Berikut adalah ruang lingkup yang ada pada penulisan tugas akhir ini.
+\begin{enumerate}
+	\item Jenis detak yang dideteksi hanya detak PVC dan detak normal
+	\item Luaran minimal yang dihasilkan dari ekstraksi ciri adalah interval puncak R dan panjang gelombang QRS complex
+	\item Metode deteksi atau klasifikasi hanya menggunakan algoritma XX yang diusulkan oleh YY. Hal ini bertujuan untuk membandingkan nilai akurasi dari algoritma ekstraksi ciri yang digunakan.
+	
+\end{enumerate}
+
+\section{Kontribusi}
+Dengan adanya algoritma ekstraksi ciri ini akan membantu para peneliti dan pengembang aplikasi untuk mendapatkan nilai akurasi yang tinggi terhadap deteksi PVC, tidak masalah apapun algoritma klasifikasi yang digunakannya.
+
+\section{Sistematika Penulisan}
+
+\begin{enumerate}
+	\item BAB I berisi tentang latar belakang, rincian masalah, tujuan, hipotesis, dan kontribusi.
+	\item BAB II berisi studi literatur 
+	\item BAB III berisi metode penelitian, rancangan sistem dan perbandingan sistem yang diajukan dengan sistem yang telah dibuat sebelumnya
+\end{enumerate}
+ 
+
+\iflogTA
+\else
+
+
+\fi

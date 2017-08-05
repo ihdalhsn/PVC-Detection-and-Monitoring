@@ -1,0 +1,152 @@
+%% This document is created by 
+%%  Dr. Putu Harry Gunawan
+%% Template untuk Proposal TA 1 dan TA
+%% Template ini digunakan untuk penulisan proposal TA 1 atau TA Fakultas Informatika, Telkom University.
+
+\documentclass[a4paper,12pt,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{sectsty}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[bahasa]{babel}
+\usepackage{indentfirst} %Spasi untuk paragraf pertama
+\usepackage{geometry}
+\usepackage{multirow}% http://ctan.org/pkg/multirow
+\usepackage{hhline}% http://ctan.org/pkg/hhline
+\marginsize{4cm}{3cm}{3cm}{3cm} %{left}{right}{top}{bottom}
+\usepackage[compact]{titlesec} 
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+
+\chapterfont{\centering}
+\newcommand{\bigsize}{\fontsize{16pt}{14pt}\selectfont}
+\chapterfont{\centering\bigsize\bfseries}
+\sectionfont{\large\bfseries}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+%\renewcommand{\chaptertitle}{BAB}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand\thesection{\arabic{chapter}.\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+
+\renewcommand\bibname{Daftar Pustaka}
+\addto{\captionsbahasa}{\renewcommand{\bibname}{Daftar Pustaka}}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Berikut adalah data-data yang wajib diisi oleh mahasiswa
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Penerapan Metode Feature Extraction Pada Deteksi Premature Ventricular Contractions (PVCs)}\let\Title\@title   %Judul dalam bahasa Indonesia
+
+\newcommand{\EngTitle}{Implementation Feature Extraction Method in Premature Ventricular Contractions (PVCs) Detection}  %Judul dalam bahasa Inggris
+
+\author{Ihda Husnayain}  \let\Author\@author  %Nama mhs
+\newcommand{\NIM}{1103130028}
+\newcommand{\Prodi}{Teknik Informatika}
+\newcommand{\KK}{Telematics } %UNTUK TA
+\newcommand{\Gelar}{komputer} % UNTUK TA
+\date{2016}           \let\Date\@date %Maskkan hanya tahun saja
+\newcommand{\Tanggal}{7} % Tanggal Pengesahan
+\newcommand{\Bulan}{Agustus} % Bulan Pengesahan
+\newcommand{\PembimbingSatu}{Satria Mandala, S.T., M.Sc, Ph.D}
+\newcommand{\NIPPembimbingSatu}{15731897-3}
+\newcommand{\PembimbingDua}{M. Syahrul Mubarok, S.T., M.Sc}
+\newcommand{\NIPPembimbingDua}{10830757-3}
+\newcommand{\Kaprodi}{Ir. Moch. Arif Bijaksana, M.Tech, Ph.D}
+\newcommand{\NIPKaprodi}{03650312-4}
+\newif\iflogTA
+\logTAtrue   %%%%%% WARNING kode ini diaktifkan untuk format TUGAS AKHIR
+\makeatother
+\linespread{1}
+
+
+\begin{document}
+\pagenumbering{roman} 
+%%\maketitle
+\begin{titlepage}
+\thispagestyle{empty}
+%\vspace*{0.7cm}
+\include{Cover}
+\pagebreak
+\thispagestyle{empty}
+\include{Lembar-Persetujuan}
+\pagebreak
+\end{titlepage}
+\addcontentsline{toc}{chapter}{Abstrak}
+\include{Abstrak-Indo}
+\iflogTA
+\pagebreak
+\addcontentsline{toc}{chapter}{Abstract}
+\include{Abstract-En}
+\pagebreak
+\addcontentsline{toc}{chapter}{Lembar Persembahan}
+\include{Lembar-Persembahan}
+\pagebreak
+\addcontentsline{toc}{chapter}{Kata Pengantar}
+\include{Kata-Pengantar}
+\pagebreak
+\fi
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Daftar Isi}
+\tableofcontents
+\iflogTA
+\newpage
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Daftar Gambar}
+\listoffigures
+\newpage
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Daftar Tabel}
+\listoftables
+%\pagebreak
+\fi
+%
+\cleardoublepage
+\pagenumbering{arabic}
+\include{Pendahuluan}
+%
+\include{Kajian-Pustaka}
+%
+\include{Metodologi}
+%
+\include{Hasil-dan-Pembahasan}
+%
+\include{Kesimpulan}
+%
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Daftar Pustaka}
+\bibliographystyle{acm} %harvard style
+\bibliography{References}
+%
+%\pagebreak
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Lampiran}
+\include{Lampiran}
+\end{document}

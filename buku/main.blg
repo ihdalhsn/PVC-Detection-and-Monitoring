@@ -1,0 +1,56 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
+A level-1 auxiliary file: Cover.aux
+A level-1 auxiliary file: Lembar-Persetujuan.aux
+A level-1 auxiliary file: Abstrak-Indo.aux
+A level-1 auxiliary file: Abstract-En.aux
+A level-1 auxiliary file: Lembar-Persembahan.aux
+A level-1 auxiliary file: Kata-Pengantar.aux
+A level-1 auxiliary file: Pendahuluan.aux
+A level-1 auxiliary file: Kajian-Pustaka.aux
+A level-1 auxiliary file: Metodologi.aux
+A level-1 auxiliary file: Hasil-dan-Pembahasan.aux
+A level-1 auxiliary file: Kesimpulan.aux
+The style file: acm.bst
+A level-1 auxiliary file: Lampiran.aux
+Database file #1: References.bib
+Warning--I'm ignoring Pedro2014's extra "editor" field
+--line 103 of file References.bib
+Warning--entry type for "Huang2015Thesis" isn't style-file defined
+--line 112 of file References.bib
+I was expecting a `,' or a `}'---line 198 of file References.bib
+ :  
+ :  title = {A New Method for ECG Signal Feature Extraction},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--entry type for "mit-bih" isn't style-file defined
+--line 242 of file References.bib
+I was expecting an "="---line 351 of file References.bib
+ :  id 
+ :     Publisher = {JBPTITBPP},
+I'm skipping whatever remains of this entry
+Warning--entry type for "sads" isn't style-file defined
+--line 389 of file References.bib
+Warning--to sort, need author or key in sads
+Too many commas in name 1 of "S. Karpagachelvi,Dr.M.Arthanari, Prof. & Head, M.Sivakumar" for entry Karpagachelvi2010
+while executing---line 1086 of file acm.bst
+Warning--to sort, need editor, organization, or key in s.a.Taouli
+Warning--empty year in s.a.Taouli
+Warning--empty author in heart_act
+Warning--empty journal in heart_act
+Warning--empty journal in A.Ouelli2012_AR
+Warning--empty journal in Chang1987
+Warning--empty journal in Pedro2014
+Warning--empty journal in Ucuk
+Warning--empty journal in fahruzi
+Warning--empty journal in Kanwar2015
+Warning--empty year in RobertChen
+Warning--empty year in Arief2015
+Warning--empty year in khandait2012
+Warning--empty journal in rameshwari
+Too many commas in name 1 of "S. Karpagachelvi,Dr.M.Arthanari, Prof. & Head, M.Sivakumar" for entry Karpagachelvi2010
+while executing---line 1127 of file acm.bst
+Warning--empty booktitle in Karpagachelvi2010
+Warning--there's a number but no series in Karpagachelvi2010
+Warning--empty journal in Sreelakshmi
+Warning--empty year in yasinKaya
+(There were 4 error messages)
