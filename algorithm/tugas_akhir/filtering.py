@@ -1,5 +1,4 @@
 from numpy import diff
-
 #====================================== DERIVATIVE AND ADAPTIVE FILTERING ==============================================
 # Formula : H(z) = 0.1*(2+z^-1 - z^-2 - z^-3) #Five point derivative
 def derivative(raw_signal):
@@ -33,3 +32,6 @@ def butter_bandpass_filter(data, lowcut = 5, highcut = 15, fs = 360, order = 6):
     b, a = butter(order, [low, high], btype='band', analog=False)
     y = lfilter(b, a, data)
     return y
+
+# ___________________________________HIGHPASS FILTER____________________________________________________________________
+

@@ -1,19 +1,4 @@
-# ________________________________________DATA DESCRIPTION______________________________________________________________
-# MIT BIH DATABASE : PVC Record
-# 102_930_940.csv => record ke 102, V5 & V2, durasi 9:30 - 9:40, PVC detected on beat- 9
-# 105_010_020.csv => record ke 105, MLII & V1, durasi 0:10 - 0:20, PVC detected on beat- 8
-# 108_450_500.csv => record ke 108, MLII, durasi 4:50 - 5:00, PVC on beat- 9
-# 108_350_400.csv => record ke 108, MLII, durasi 3:50 - 4:00, PVC on beat- 3
-# ______________________________________________________________________________________________________________________
-import time
-import matplotlib.pyplot as plt
-import filtering as filt
 
-
-# start_time = time.time()
-# f = open('data/108_350_400.csv', 'r')
-# lines = f.readlines()
-# f.close()
 def main_test(lines,fig,data_title,signal_type):
     # Discard the first two lines because of header. Takes either column 1 or 2 from each lines (different signal lead)
     raw_signal = [0]*(len(lines)-2)

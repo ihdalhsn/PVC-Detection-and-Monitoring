@@ -113,8 +113,8 @@ def bwr(raw):
     num_dec = 0
     last_lp = []
     while True:
-        print 'Iterasi ke' + str(num_dec+1)
-        print len(curlp)
+        # print 'Iterasi ke' + str(num_dec+1)
+        # print len(curlp)
 
         # Decompose 1 level
         [lp, hp] = db4_dec(curlp,1)
@@ -123,7 +123,7 @@ def bwr(raw):
         en0 = en1
         en1 = en2
         en2 = calcEnergy(hp)
-        print en2
+        # print en2
 
         # Check if we are in the local minimum of energy function of high-pass signal
         if en0 > en1 and en1 < en2:

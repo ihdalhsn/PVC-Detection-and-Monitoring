@@ -1,12 +1,6 @@
-Normal
-Normal
-Normal
-Normal
-Ventricular Arrhytmia Detected
-Ventricular Arrhytmia Detected
-Ventricular Arrhytmia Detected
-Normal
-Normal
-Normal
-Normal
-Ventricular Arrhytmia Detected
+====== Novel Windowing Algorithm 2014 ======
+Normal beat : 6
+PVC beat : 6
+====== PEDRO 2014 ======
+Normal beat : 8
+PVC beat : 4

@@ -1,21 +1,9 @@
-# ________________________________________DATA DESCRIPTION______________________________________________________________
-# MIT BIH DATABASE : PVC Record
-# 102_930_940.csv => record ke 102, V5 & V2, durasi 9:30 - 9:40, PVC detected on beat- 9
-# 105_010_020.csv => record ke 105, MLII & V1, durasi 0:10 - 0:20, PVC detected on beat- 8
-# 108_450_500.csv => record ke 108, MLII, durasi 4:50 - 5:00, PVC on beat- 9
-# 108_350_400.csv => record ke 108, MLII, durasi 3:50 - 4:00, PVC on beat- 3
-# ______________________________________________________________________________________________________________________
-import time
 import matplotlib.pyplot as plt
-import filtering as filt
 import math
+import filtering as filt
+import cls_pedro, cls_windowing
+import bwr
 
-
-
-# start_time = time.time()
-# f = open('data/108_350_400.csv', 'r')
-# lines = f.readlines()
-# f.close()
 def main_test(lines,fig,data_title,signal_type,file_result):
     # Discard the first two lines because of header. Takes either column 1 or 2 from each lines (different signal lead)
     raw_signal = [0]*(len(lines)-2)
@@ -29,6 +17,8 @@ def main_test(lines,fig,data_title,signal_type,file_result):
 
     #___________________________________________2.1 ECG FILTERING___________________________________________________________
 
+    (baseline, raw_signal) = bwr.bwr(raw_signal)
+    # raw_signal = filt.butter_highpass_filter(raw_signal, 0.25, 260)
     ecg_der = filt.five_point_derivative(raw_signal)
     ecg_adp = filt.adaptive_filter(ecg_der)
 
@@ -70,16 +60,17 @@ def main_test(lines,fig,data_title,signal_type,file_result):
                     r_peaks.append(r_detect)
                     list_upper = []
 
-# 3. Calculate RR Interval & SET P Q S T peak
+    # 3. Calculate RR Interval & SET P Q S T peak
     print "Total R peaks : ", len(r_peaks)
 
-    print r_peaks
     rr_list = []
     pr_list = []
+    pq_list = []
     qrs_list = []
     qt_list = []
     qt_corr = []
     bpm_list = []
+    st_level_list = []
     fs = 360
     # LOOPING TO GAIN PQST PEAK AND IT'S INTERVAL
     for i in range(len(r_peaks) - 1):
@@ -87,17 +78,18 @@ def main_test(lines,fig,data_title,signal_type,file_result):
         r2 = r_peaks[i + 1][0]
         rr = r2 - r1
         rr_list.append(rr)
-        print "======= Beat ", i + 1, " to Beat ",i+2, " ========="
-        print "R1 : ", r1
-        print "R2 : ", r2
-        print "RR Interval : ", rr
-        # SET T
+        # print "======= Beat ", i + 1, " to Beat ",i+2, " ========="
+        # print "R1 : ", r1
+        # print "R2 : ", r2
+        # print "RR Interval : ", rr
+
+        # T-wave in one R-R interval is selected by starting from 15% of the R-R interval added to the 1st R-peak location
+        # and continuing to 55% of the R-R interval added
         t_on  = (15 * rr)/100
         t_on  = t_on + r1
         t_off = (55 * rr)/100
         t_off = t_off + r1
-        print "T onset  : ", t_on
-        print "T offset : ", t_off
+        # print "T onset  : ", t_on, " | offset : ", t_off
         # plt.axvspan(t_on, t_off, facecolor='#f9ff4f', alpha=0.5)
         t = t_on; t_list = []
         while(t <= t_off):
@@ -105,16 +97,16 @@ def main_test(lines,fig,data_title,signal_type,file_result):
             t += 1
         t_peak = max(t_list)
         t_in   = sample.index(t_peak)
-        t_plot = plt.plot(t_in, t_peak, 'g.', markersize=8) #Plot the T peak
-        print "T Peak   : ", t_in
+        plt.plot(t_in, t_peak, 'g.', markersize=8) #Plot the T peak
+        # print "T Peak   : ", t_in
 
-        # SET P
+        # P-wave in one R-R interval is selected by starting from 65% of the R-R interval added to
+        # the 1st R-peak location and continuing to 95% of the R-R interval added to the same location
         p_on  = (35 * rr)/100
-        p_on  = r1 - p_on
+        p_on  = r2 - p_on
         p_off = (5 * rr)/100
-        p_off = r1 - p_off
-        print "P onset  : ", p_on
-        print "P offset : ", p_off
+        p_off = r2 - p_off
+        # print "P onset  : ", p_on, " | offset : ", p_off
         # plt.axvspan(p_on, p_off, facecolor='#ff9999', alpha=0.5)
         p = p_on; p_list = []
         while(p <= p_off):
@@ -122,14 +114,29 @@ def main_test(lines,fig,data_title,signal_type,file_result):
             p += 1
         p_peak = max(p_list)
         p_in   = sample.index(p_peak)
-        p_plot = plt.plot(p_in, p_peak, 'b.', markersize=8) #Plot the P peak
-        print "P Peak   : ", p_in
+        p_plot = plt.plot(p_in, p_peak, 'r.', markersize=8) #Plot the P peak
+        # print "P Peak   : ", p_in
 
-        # SET S
+        # Q-peak is chosen by selecting minimum value in the window starting from 20 ms before
+        # the corresponding R-peak and that particular R-peak
+        q_on  = (5 * rr)/100
+        q_on  = r2 - q_on
+        q_off = r2
+        # print "Q onset  : ", q_on, " | offset : ", q_off
+        # plt.axvspan(q_on, q_off, facecolor='#ffffff', alpha=0.5)
+        q = q_on; q_list = []
+        while(q <= q_off):
+            q_list.append(sample[q])
+            q += 1
+        q_peak = min(q_list)
+        q_in   = sample.index(q_peak)
+        plt.plot(q_in, q_peak, 'b.', markersize=8) #Plot the Q peak
+        # print "Q Peak   : ", q_in
+
+        # S-peak is chosen by selecting the lowest value in the window starting from R-peak to 20 ms after that R-peak.
         s_on  = r1
-        s_off = t_off
-        print "S onset  : ", s_on
-        print "S offset : ", s_off
+        s_off = t_on
+        # print "S onset  : ", s_on, " | offset : ", s_off
         # plt.axvspan(s_on, s_off, facecolor='#beff9b', alpha=0.5)
         s = s_on; s_list = []
         while(s <= s_off):
@@ -137,59 +144,50 @@ def main_test(lines,fig,data_title,signal_type,file_result):
             s += 1
         s_peak = min(s_list)
         s_in   = sample.index(s_peak)
-        s_plot = plt.plot(s_in, s_peak, 'y.', markersize=8) #Plot the S peak
-        print "S Peak   : ", s_in
-
-        # SET Q
-        q_on  = (5 * rr)/100
-        q_on  = r1 - q_on
-        q_off = r1
-        print "Q onset  : ", q_on
-        print "Q offset : ", q_off
-        # plt.axvspan(q_on, q_off, facecolor='#ffffff', alpha=0.5)
-
-        q = q_on; q_list = []
-        while(q <= q_off):
-            q_list.append(sample[q])
-            q += 1
-        q_peak = min(q_list)
-        q_in   = sample.index(q_peak)
-        q_plot = plt.plot(q_in, q_peak, 'r.', markersize=8) #Plot the Q peak
-        print "Q Peak   : ", q_in
-
+        plt.plot(s_in, s_peak, 'y.', markersize=8) #Plot the S peak
+        # print "S Peak   : ", s_in
 
         # 4. ECG Timing Intervals Calculations
         # PR Interval
         t_pr = (r1 - p_in)/fs
         pr_list.append(t_pr)
-        print "PR Interval : ", t_pr
+        # print "PR Interval : ", t_pr
 
         # QRS Duration
         x = (6.65/100)*rr
         t_qrs = ((s_in + x)-(q_in - x))/fs
         qrs_list.append(t_qrs)
-        print "QRS Duration : ", t_qrs
+        # print "QRS Duration : ", t_qrs
 
         #QT Interval
         t_qt = (t_in + (rr * 0.13) - (q_in - x))/fs
         qt_list.append(t_qt)
-        print "QT Interval : ", t_qt
+        # print "QT Interval : ", t_qt
 
         #QT Corrected
         t_qt_corr = t_qt / (fs * math.sqrt(rr))
         qt_corr.append(t_qt_corr)
-        print "QT Corrected : ", t_qt_corr
+        # print "QT Corrected : ", t_qt_corr
 
         #Vent Rate
         bpm = (fs/rr)*60
         bpm_list.append(bpm)
-        print "BPM : ", bpm
+        # print "BPM : ", bpm
+
+        # #PQ Interval
+        t_pq = q_in - p_in
+        pq_list.append(t_pq)
+        # print "PQ Interval : ", t_pq
+
+        if(q_in != p_in):
+            print "p exist"
+        else:
+            print "p absence", i + 2
     # END LOOPING TO GAIN PQST PEAK AND IT'S INTERVAL
 
     # LOOPING TO GAIN PQST INTERVAL MEAN
     print "======= INTERVALS ==========="
-    print rr_list, len(rr_list)
-    rr_temp = 0; pr_temp = 0 ; qrs_temp = 0; qt_temp = 0; qtcorr_temp = 0; bpm_temp = 0
+    rr_temp = 0; pr_temp = 0 ; qrs_temp = 0; qt_temp = 0; qtcorr_temp = 0; bpm_temp = 0; st_level = 0; pq_temp = 0;
     for k in range(len(rr_list)):
         rr_temp     = rr_temp + rr_list[k]
         pr_temp     = pr_temp + pr_list[k]
@@ -197,64 +195,31 @@ def main_test(lines,fig,data_title,signal_type,file_result):
         qt_temp     = qt_temp + qt_list[k]
         qtcorr_temp = qtcorr_temp + qt_corr[k]
         bpm_temp    = bpm_temp + bpm_list[k]
+        # st_level    = st_level + st_level_list[k]
+        pq_temp     = pq_temp + pq_list[k]
 
     qtcorr_mean = float(qtcorr_temp)/float(len(qt_corr))
     rr_mean     = float(rr_temp)/float(len(rr_list))
+    # st_mean     = float(st_level)/float(len(st_level_list))
+    pq_mean     = float(pq_temp)/float(len(pq_list))
     print "RR Mean  : ", rr_mean
     print "PR Mean  : ", float(pr_temp)/float(len(pr_list))
     print "QRS Mean : ", float(qrs_temp)/float(len(qrs_list))
     print "QT Mean  : ", float(qt_temp)/float(len(qt_list))
     print "QT Corr Mean : ", qtcorr_mean
     print "BPM Mean : ", float(bpm_temp)/float(len(bpm_list))
+    print "PQ Mean  : ", pq_mean
+    # print "ST Level Mean : ", float(st_level)/float(len(st_level_list))
     # END LOOPING TO GAIN PQST INTERVAL MEAN
 
 
-    #DETECTION BY QT CORRECTION (NOVELWINDOWING2014)
-    count_normal = 0
-    count_pvc    = 0
-    for j in range(len(qt_corr)):
-        if(qt_corr[j] < qtcorr_mean ):
-            message = "PVC Detected"
-            count_pvc += 1
-        else:
-            message = "Normal"
-            count_normal += 1
-        # print "============= MESSAGE ==========="
-        # print message
-    file_result.write("====== Novel Windowing Algorithm 2014 ======\n")
-    file_result.write("Normal beat : "+ str(count_normal)+"\n")
-    file_result.write("PVC beat : "+ str(count_pvc)+"\n")
-    print "============= RESULT WINDOWING =============="
-    print "Normal beat : "+ str(count_normal)
-    print "PVC beat : "+ str(count_pvc)
 
+    #_______________________________________________2.2 CLASSIFICATION__________________________________________________
 
-    #DETECTION PREMATURITY & COMPENSATORY PAUSE (PEDRO2014)
-    print "============= CLASSIFICATION : PEDRO 2014 ==========="
-    count_normal = 0
-    count_pvc    = 0
-    for i in range(len(rr_list)):
-        prematurity = float(rr_mean - rr_list[i])/float(rr_mean)
-        print "Prematurity ",i+1," : ", prematurity
+    # cls_windowing.main(qt_corr,qtcorr_mean,file_result);
+    # cls_pedro.main(rr_list,rr_mean,file_result);
 
-        if(i+1 < len(rr_list)):
-            compensatory_pause = float(rr_list[i+1] - rr_mean)/float(rr_mean)
-            print "Compensatory ",i+1," : ", compensatory_pause
-
-        if(prematurity > 0 and compensatory_pause < 0):
-            message = "PVC Detected"
-            count_pvc += 1
-        else:
-            message = "Normal"
-            count_normal += 1
-        # print message
-    file_result.write("====== PEDRO 2014 ======\n")
-    file_result.write("Normal beat : "+ str(count_normal) +"\n")
-    file_result.write("PVC beat : "+ str(count_pvc) +"\n")
-    print "============= RESULT PEDRO =============="
-    print "Normal beat : "+ str(count_normal)
-    print "PVC beat : "+ str(count_pvc)
-    #DETECTION BY P-T INTERVAL
-    print "======== PT INTERVAL ============"
-    print t_list, len(t_list)
-    print p_list, len(p_list)
+    # Detect by shorter PQ interval
+    for k in range(len(pq_list)):
+        if(pq_list[k] < pq_mean):
+            print "Shorter P - Q Interval ", k

@@ -7,20 +7,20 @@
 # '108_450_500.csv','105_2650_2700.csv', '107_1230_1240.csv'
 # ______________________________________________________________________________________________________________________
 
-# from __future__ import division
 import time
-import sub_main2
+import sub_main
 import matplotlib.pyplot as plt
 
-path = 'data/PVC/'
-# data = ['100.csv','101.csv','105.csv']
-# data = ['husna3.csv', 'rifah6.csv']
-data = ['102_128.csv','108_450_500.csv','105_2650_2700.csv', '107_1230_1240.csv']
+path = 'data/'
+# data = ['1.csv', '2.csv', '3.csv', '4.csv', '5.csv', '6.csv', '7.csv', '8.csv', '9.csv', '10.csv']
+data = ['husna3.csv', 'rifah6.csv']
+# data = ['102_128.csv','108_450_500.csv','105_2650_2700.csv', '107_1230_1240.csv']
 V         = 2
 MLII      = 1
 real_time = 0
 #Choose signal type
-signal_type = MLII
+signal_type = real_time
+
 start_time = time.time()
 for i in range(len(data)):
         print "========================================================================================================="
@@ -30,7 +30,7 @@ for i in range(len(data)):
         lines = f.readlines()
         f.close()
         file_result = open('hasil/'+data[i]+'.txt', 'w')
-        sample = sub_main2.main_test(lines,i,read_data,signal_type,file_result)
+        sample = sub_main.main_test(lines, i, read_data, signal_type, file_result)
         file_result.close()
 
 # _________________________________________________ESTIMATED TIME_______________________________________________________
