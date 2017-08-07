@@ -11,13 +11,13 @@
 	Keterangan : 
 	\begin{enumerate}
 	\item Studi Literatur
-	 \subitem Pada tahap ini dilakukan review terhadap penelitian-penelitian yang telah dilakukan sebelumnya. Dilakukan dengan membaca jurnal dan artikel yang berkaitan. Pada tahap ini juga penulis menganalisis masalah dan membuat alasan mengapa masalah tersebut perlu diselesaikan.
+	 \subitem Pada tahap ini dilakukan review terhadap penelitian-penelitian yang telah dilakukan sebelumnya, dan merangkum fakta serta teori yang dibutuhkan dalam penelitian. Dilakukan dengan membaca jurnal dan artikel yang berkaitan. Pada tahap ini juga penulis menganalisis masalah dan membuat alasan mengapa masalah tersebut perlu diselesaikan.
 	\item Eksperiment Algoritma yang Sudah Ada
-	\subitem Melakukan eksperimen terhadap algoritma yang disebutkan dalam literatur yaitu algoritma Empirical Mode Decomposition(EMD).
+	\subitem Melakukan eksperimen terhadap algoritma yang disebutkan dalam literatur yaitu algoritma \textit{Adaptive thresholding} dan \textit{Windowing Algorithm}.
 	\item Analisis Metode
-	\subitem Tahap ini adalah tahap analisis metode yang digunakan dalam eksperimen dan bertujuan untuk mengetahui performansi metode tersebut.
+	\subitem Tahap ini adalah tahap analisis metode yang digunakan dalam eksperimen dan bertujuan untuk mengetahui performansi dan akurasi metode tersebut.
 	\item Pengembangan Algoritma
-	\subitem Tahap ini adalah tahap perumusan dan pengembangan terhadap algoritma EMD yang telah diterapkan sebelumnya.
+	\subitem Tahap ini adalah tahap perumusan dan pengembangan terhadap algoritma yang telah diterapkan sebelumnya.
 	\item Uji Algoritma
 	\subitem Melakukan pengujian terhadap algoritma yang baru berdasarkan metrik-metrik yang sudah ada
 	\item Membandingkan Algoritma
@@ -42,13 +42,37 @@ Pada penelitian ini digunakan perangkat sebagai berikut :
  
 	\end{enumerate} 
 
-	
-\subsection{Metrik}
-Metrik yang digunakan dalam melakukan pengukuran algoritma adalah metrik yang juga digunakan pada penelitian-penelitian sebelumnya \cite{Karpagachelvi2010,yasinKaya}. Meliputi akurasi, spesifikasi, dan sensitivitas.
+
+
+\subsection{Perbandingan Sistem yang Telah Ada}
+Sistem ini akan dibandingkan dengan sistem deteksi PVC lain yang menggunakan \textit{classifier} sama yaitu ANN\cite{Arief2015,Sreelakshmi} dan pada penelitian yang sebelumnya telah menggunakan EMD sebagai \textit{feature extraction} pada deteksi AF\cite{UMaji}.
+
+
+\section{Rancangan sistem}
+\subsection{Arsitektur}
+Berikut adalah rancangan sistem yang akan dibuat
+
+	%\begin{figure}[h!]
+		%\centering
+		%\includegraphics[scale=0.5]{sistem.png}
+		%\caption{Rancangan Sistem}
+		%\label{fig:my_sistem}
+	%\end{figure}
+
+Gambar di atas adalah rancangan umum metode deteksi PVC. Tahap pertama yang dilakukan adalah \textit{pre-processing} ECG yang termasuk di dalamnya adalah \textit{filtering} dan \textit{denoising} untuk mendapatkan sinyal yang bersih. Selanjutnya adalah tahap ekstraksi ciri dari data sampling yang menggunakan algoritma \textit{Adaptive Thresholding} dan \textit{Windowing Algorithm} untuk memperoleh titik-titik fiducial dari gelombang EKG. 
+Selanjutnya algoritma klasifikasi XX aka mendefinisikan apakah fitur yang diberikan  termasuk dalam ciri-ciri PVC atau bukan PVC. Tahap terakhir adalah pengujian yang dilakukan untuk memastikan luaran yang didapatkan berhasil mencapai nilai akurasi, sensitivitas, dan spesifikasi yang diinginkan.
+
+\subsection{\textit{Preprocessing}}
+
+\subsection{Algoritma Ekstraksi Ciri}	
+
+\subsection{Algoritma Deteksi}
+
+\subsection{Pengujian}
+Metrik pengujian yang digunakan dalam melakukan pengujian algoritma adalah metrik yang juga digunakan pada penelitian-penelitian sebelumnya \cite{Karpagachelvi2010,yasinKaya}. Meliputi akurasi, spesifikasi, dan sensitivitas.
 
 \subparagraph {Persamaan Akurasi}
 \begin{equation}\label{akurasi}
-%\int_0^1 \frac{f(x)}{g(x)}\ {\rm dx}=\sin x
 accuracy = \frac{TP + TN}{TP+FP+FN+TN}
 \end{equation}
 
@@ -63,27 +87,3 @@ sensitivity = \frac{TP}{TP+FN}
 \end{equation}
 
 Di mana TP dan TN melambangkan total dari kebenaran klasifikasi denyut PVC (true positif) dan sebanyak N denyut (true negatif) sampel. Sedangkan FP dan FN melambangkan jumlah dari kesalahan klasifikasi sampel denyut PVC (false positif) dan N denyut (False negative) sampel\cite{yasinKaya}
-
-\subsection{Perbandingan Sistem yang Telah Ada}
-Sistem ini akan dibandingkan dengan sistem deteksi PVC lain yang menggunakan \textit{classifier} sama yaitu ANN\cite{Arief2015,Sreelakshmi} dan pada penelitian yang sebelumnya telah menggunakan EMD sebagai \textit{feature extraction} pada deteksi AF\cite{UMaji}.
-
-
-\section{Rancangan sistem}
-\subsection{Arsitektur}
-Berikut adalah rancangan sistem yang akan dibuat
-
-	\begin{figure}[h!]
-		\centering
-		\includegraphics[scale=0.5]{sistem.png}
-		\caption{Rancangan Sistem}
-		\label{fig:my_sistem}
-	\end{figure}
-
-Gambar di atas adalah rancangan umum metode deteksi PVC. Tahap pertama yang dilakukan adalah \textit{pre-processing} ECG yang termasuk di dalamnya adalah \textit{beat parsing, denoising} hingga mendapatkan sinyal yang bersih untuk masuk dalam tahap ekstraksi fitur. Selanjutnya adalah tahap \textit{feature extraction} yang menggunakan algoritma EMD untuk memperoleh bentuk dari gelombang PVC seperti posisi titik R, lebar gelombang QRS dan sebagainya. Berikutnya nilai dari \textit{feature extraction} yang di dapat akan menjadi masukan bagi \textit{classifier} ANN sebagai informasi gelombang PVC yang harus dibaca. Selanjutnya ANN akan membaca semua data gelombang yang masuk dan mendefinisikan gelombang yang termasuk PVC dan yang bukan PVC. Tahap terakhir adalah validasi yang dilakukan untuk memastikan luaran yang didapatkan adalah valid dan sekaligus mengukur nilai akurasi, sensitivitas, dan spesifikasi.
-\subsection{Algoritma}	
-\begin{figure}[h!]
-	\centering
-	\includegraphics[scale=0.6]{algo-emd.png}
-	\caption{Algoritma EMD\cite{UMaji}}
-	\label{fig:emd_algo}
-\end{figure}

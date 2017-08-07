@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.10.30)  5 AUG 2017 23:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.10.30)  6 AUG 2017 14:02
 entering extended mode
 **./main.tex
 (main.tex
@@ -1115,22 +1115,28 @@ Bab I.
 
  (Kajian-Pustaka.tex
 Bab II.
-[4
+<ekg.png, id=53, 610.28pt x 602.25pt>
+File: ekg.png Graphic file (type png)
+ <use ekg.png>
+Package pdftex.def Info: ekg.png used on input line 8.
+(pdftex.def)             Requested size: 305.13925pt x 301.12425pt.
+ [4
 
 
 
-] [5] <comparison-tab.png, id=59, 751.30687pt x 253.69781pt>
+ <./ekg.png>] [5]
+[6] <comparison-tab.png, id=64, 751.30687pt x 253.69781pt>
 File: comparison-tab.png Graphic file (type png)
 
 <use comparison-tab.png>
-Package pdftex.def Info: comparison-tab.png used on input line 33.
+Package pdftex.def Info: comparison-tab.png used on input line 46.
 (pdftex.def)             Requested size: 375.65251pt x 126.84859pt.
-) [6 <./comparison-tab.png>]
+) [7 <./comparison-tab.png>]
 \openout2 = `Metodologi.aux'.
 
  (Metodologi.tex
 Bab III.
-<metode-penelitian2.png, id=64, 715.67375pt x 394.47375pt>
+<metode-penelitian2.png, id=69, 715.67375pt x 394.47375pt>
 File: metode-penelitian2.png Graphic file (type png)
 
 <use metode-penelitian2.png>
@@ -1141,7 +1147,7 @@ Overfull \hbox (31.06897pt too wide) in paragraph at lines 6--7
  [][] 
  []
 
-[7
+[8
 
 
 
@@ -1151,39 +1157,28 @@ Overfull \hbox (17.30174pt too wide) in paragraph at lines 22--23
 u ber-da-sark-an metrik-
  []
 
-[8] <sistem.png, id=72, 755.82375pt x 135.50626pt>
-File: sistem.png Graphic file (type png)
- <use sistem.png>
-Package pdftex.def Info: sistem.png used on input line 77.
-(pdftex.def)             Requested size: 377.91095pt x 67.75294pt.
- [9 <./sistem.png>] <algo-emd.png, id=79, 309.155pt x 605.26125pt>
-File: algo-emd.png Graphic file (type png)
- <use algo-emd.png>
-Package pdftex.def Info: algo-emd.png used on input line 86.
-(pdftex.def)             Requested size: 185.49442pt x 363.15953pt.
-)
-[10 <./algo-emd.png>]
+[9]) [10] [11]
 \openout2 = `Hasil-dan-Pembahasan.aux'.
 
  (Hasil-dan-Pembahasan.tex
 Bab IV.
-) [11
+) [12
 
 
 
 ]
 \openout2 = `Kesimpulan.aux'.
 
- (Kesimpulan.tex) (main.bbl [12
+ (Kesimpulan.tex) (main.bbl [13
 
 
 
 
 
-]) [13]
+]) [14]
 \openout2 = `Lampiran.aux'.
 
- (Lampiran.tex) [14
+ (Lampiran.tex) [15
 
 
 
@@ -1198,22 +1193,22 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 16183 strings out of 493334
- 307241 string characters out of 3137080
- 373383 words of memory out of 3000000
- 19263 multiletter control sequences out of 15000+200000
+ 16177 strings out of 493334
+ 307134 string characters out of 3137080
+ 372375 words of memory out of 3000000
+ 19258 multiletter control sequences out of 15000+200000
  11775 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,13n,56p,1587b,325s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,13n,56p,1440b,325s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9.6069/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
 C:/Program Files/MiKTeX 2.9.6069/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C
 :/Program Files/MiKTeX 2.9.6069/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/
 Program Files/MiKTeX 2.9.6069/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Pro
 gram Files/MiKTeX 2.9.6069/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program
  Files/MiKTeX 2.9.6069/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on main.pdf (24 pages, 560712 bytes).
+Output written on main.pdf (25 pages, 551347 bytes).
 PDF statistics:
- 117 PDF objects out of 1000 (max. 8388607)
+ 119 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 38 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

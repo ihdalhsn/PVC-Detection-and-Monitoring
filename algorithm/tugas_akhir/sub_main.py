@@ -8,13 +8,15 @@
 import time
 import matplotlib.pyplot as plt
 import filtering as filt
+import math
+
 
 
 # start_time = time.time()
 # f = open('data/108_350_400.csv', 'r')
 # lines = f.readlines()
 # f.close()
-def main_test(lines,fig,data_title,signal_type):
+def main_test(lines,fig,data_title,signal_type,file_result):
     # Discard the first two lines because of header. Takes either column 1 or 2 from each lines (different signal lead)
     raw_signal = [0]*(len(lines)-2)
     for i in xrange(len(raw_signal)):
@@ -24,6 +26,7 @@ def main_test(lines,fig,data_title,signal_type):
     plt.title('Raw signal '+data_title)
     plt.plot(range(len(raw_signal)),raw_signal)
     len_sample = len(raw_signal)
+
     #___________________________________________2.1 ECG FILTERING___________________________________________________________
 
     ecg_der = filt.five_point_derivative(raw_signal)
@@ -32,38 +35,26 @@ def main_test(lines,fig,data_title,signal_type):
     # print ecg_adp
     # print "Derivative result : ", ecg_der
     plt.subplot(312); plt.tight_layout()
-    plt.plot(range(len(ecg_der)),ecg_der)
+    plt.plot(range(len(ecg_adp)),ecg_adp)
     plt.title('Derivative Result')
-
 
     #___________________________________________2.1 FEATURE EXTRACTION__________________________________________________
     # colors = plt.cm.rainbow(len(sample))
     sampled_window = len_sample
     sample = []
     for i in range(sampled_window):
-        sample.append(ecg_adp[i])
+        sample.append(ecg_adp[i-1])
     # plt.figure(fig+1)
     plt.subplot(313); plt.tight_layout()
     plt.plot(range(len(sample)),sample)
     plt.title('Sample Data')
-    # 1. Search for a maximum value within the sampled window which represents one of the R peaks (MAX)
-    MAX = max(sample);
-    in_max = sample.index(MAX)
-    plt.plot(in_max, MAX, 'r.', markersize=8)
-    # 2. Search for a minimum value within the sampled window which represents one of S peaks (MIN)
-    MIN = min(sample)
-    in_min = sample.index(MIN)
-    plt.plot(in_min, MIN, 'g.', markersize=8)
-    # 3. Obtain a threshold such that: Threshold R = MAX/2 and threshold S = MIN/2
-    R = MAX/2
-    S = MIN/2
-    # 4. Find Ri peaks overall the sampled window which should be above threshold R
-    list_peaks_index = []
-    s_points = []
 
+    # 1. IDENTIFY R PEAKS
+    MAX = max(sample);
+
+    # 2. Obtain a threshold such that: Threshold t = (0.4) * MAX
+    R = 0.4 * MAX
     list_upper = []; r_peaks = []
-    list_lower = []; s_peaks = []
-    p_point  = 0
     for i in range(sampled_window - 1):
         if(sample[i] > R):
             #first upper
@@ -79,98 +70,191 @@ def main_test(lines,fig,data_title,signal_type):
                     r_peaks.append(r_detect)
                     list_upper = []
 
-                    # GET S FROM R
-
-                    if(r_plot):
-                        # plt.axvspan(i, i + 10, facecolor='#ffcccc', alpha=0.5)
-                        j = i
-                        s_win = j + 10
-                        if(s_win < sampled_window):
-                            for j in range(s_win-1):
-                                if(sample[j] < S):
-                                    #first lower
-                                    if(len(list_lower) == 0):
-                                        list_lower.append(sample[j])
-                                    else:
-                                        list_lower.append(sample[j])
-                                        if(sample[j+1] > S and j+1 < s_win):
-                                            find_s = min(list_lower)
-                                            find_s_in = sample.index(find_s)
-                                            s_detect = [find_s_in, find_s]
-                                            s_peaks.append(s_detect)
-                                            s_plot = plt.plot(find_s_in, find_s, 'g.', markersize=8) #Plot the maximum peak
-                                            s_on   = find_s_in
-                                            list_lower = []
-                            # GET Q FROM R
-                            # plt.axvspan(i - 20, i, facecolor='#f97f7f', alpha=0.5)
-                            q_on = i - 20
-                            q_off = i
-                            find_q = min(sample[q_on],sample[q_off])
-                            find_q_in = sample.index(find_q)
-                            q_plot = plt.plot(find_q_in, find_q, 'b.', markersize=8) #Plot the maximum peak
-
-                            # GET P FROM R
-                            if(q_plot):
-                                # plt.axvspan(i - 100, i - 25, facecolor='#fff67a', alpha=0.5)
-                                p_win_on    = i - 60
-                                p_win_off   = i - 25
-                                find_p      = max(sample[p_win_on], sample[p_win_off])
-                                find_p_in   = sample.index(find_p)
-                                if(find_p_in < find_q_in):
-                                    p_plot = plt.plot(find_p_in, find_p, 'y.', markersize=8) #Plot the maximum peak
-                                    if(p_plot):
-
-                                    # GET T FROM R
-                                        t_win_on = i + 25
-                                        t_win_off = i + 100
-                                        if(t_win_on < sampled_window and t_win_off < sampled_window):
-                                            find_t = max(sample[t_win_on],sample[t_win_off])
-                                            find_t_in = sample.index(find_t)
-                                            # if(find_t_in > find_s_in):
-                                            t_plot = plt.plot(find_t_in, find_t, 'r.', markersize=8) #Plot the maximum peak
-                # GET S INDEPENDENTLY
-                # if(sample[i] < S):
-                #     #first lower
-                #     if(len(list_lower) == 0):
-                #         list_lower.append(sample[i])
-                #     else:
-                #         list_lower.append(sample[i])
-                #         if(sample[i+1] > S):
-                #             find_min = min(list_lower)
-                #             find_min_in = sample.index(find_min)
-                #             s_detect = [find_min_in, find_min]
-                #             s_peaks.append(s_detect)
-                #             r_found = plt.plot(find_min_in, find_min, 'b.', markersize=8) #Plot the maximum peak
-                #             list_lower = []
-
-    #___________________________________________2.2 CLASSIFICATION__________________________________________________
+# 3. Calculate RR Interval & SET P Q S T peak
     print "Total R peaks : ", len(r_peaks)
-    print "Total S peaks : ", len(s_peaks)
-    print s_peaks[0][1], s_peaks[0][0]; # How to access list => name_list[index_peaks][peaks_component (0 for index, 1 for  value)]
 
-    font = {'family': 'serif',
-        'color':  'darkred',
-        'weight': 'normal',
-        'size': 16,
-        }
+    print r_peaks
+    rr_list = []
+    pr_list = []
+    qrs_list = []
+    qt_list = []
+    qt_corr = []
+    bpm_list = []
+    fs = 360
+    # LOOPING TO GAIN PQST PEAK AND IT'S INTERVAL
+    for i in range(len(r_peaks) - 1):
+        r1 = r_peaks[i][0]
+        r2 = r_peaks[i + 1][0]
+        rr = r2 - r1
+        rr_list.append(rr)
+        print "======= Beat ", i + 1, " to Beat ",i+2, " ========="
+        print "R1 : ", r1
+        print "R2 : ", r2
+        print "RR Interval : ", rr
+        # SET T
+        t_on  = (15 * rr)/100
+        t_on  = t_on + r1
+        t_off = (55 * rr)/100
+        t_off = t_off + r1
+        print "T onset  : ", t_on
+        print "T offset : ", t_off
+        # plt.axvspan(t_on, t_off, facecolor='#f9ff4f', alpha=0.5)
+        t = t_on; t_list = []
+        while(t <= t_off):
+            t_list.append(sample[t])
+            t += 1
+        t_peak = max(t_list)
+        t_in   = sample.index(t_peak)
+        t_plot = plt.plot(t_in, t_peak, 'g.', markersize=8) #Plot the T peak
+        print "T Peak   : ", t_in
+
+        # SET P
+        p_on  = (35 * rr)/100
+        p_on  = r1 - p_on
+        p_off = (5 * rr)/100
+        p_off = r1 - p_off
+        print "P onset  : ", p_on
+        print "P offset : ", p_off
+        # plt.axvspan(p_on, p_off, facecolor='#ff9999', alpha=0.5)
+        p = p_on; p_list = []
+        while(p <= p_off):
+            p_list.append(sample[p])
+            p += 1
+        p_peak = max(p_list)
+        p_in   = sample.index(p_peak)
+        p_plot = plt.plot(p_in, p_peak, 'b.', markersize=8) #Plot the P peak
+        print "P Peak   : ", p_in
+
+        # SET S
+        s_on  = r1
+        s_off = t_off
+        print "S onset  : ", s_on
+        print "S offset : ", s_off
+        # plt.axvspan(s_on, s_off, facecolor='#beff9b', alpha=0.5)
+        s = s_on; s_list = []
+        while(s <= s_off):
+            s_list.append(sample[s])
+            s += 1
+        s_peak = min(s_list)
+        s_in   = sample.index(s_peak)
+        s_plot = plt.plot(s_in, s_peak, 'y.', markersize=8) #Plot the S peak
+        print "S Peak   : ", s_in
+
+        # SET Q
+        q_on  = (5 * rr)/100
+        q_on  = r1 - q_on
+        q_off = r1
+        print "Q onset  : ", q_on
+        print "Q offset : ", q_off
+        # plt.axvspan(q_on, q_off, facecolor='#ffffff', alpha=0.5)
+
+        q = q_on; q_list = []
+        while(q <= q_off):
+            q_list.append(sample[q])
+            q += 1
+        q_peak = min(q_list)
+        q_in   = sample.index(q_peak)
+        q_plot = plt.plot(q_in, q_peak, 'r.', markersize=8) #Plot the Q peak
+        print "Q Peak   : ", q_in
 
 
-    diff = 0; count = 0; list_distance = []
-    for i in range(len(r_peaks)-1):
-        new_diff = r_peaks[i + 1][0] - r_peaks[i][0]
-        diff = diff + new_diff
-        count += 1
-        print "dist beat ", i + 1, " to ",i+2," : ", new_diff
-        list_distance.append([new_diff,i+1])
+        # 4. ECG Timing Intervals Calculations
+        # PR Interval
+        t_pr = (r1 - p_in)/fs
+        pr_list.append(t_pr)
+        print "PR Interval : ", t_pr
 
-    diff_avg = diff/count
-    max_diff = diff_avg + 50
-    print "Distance Avg : ", diff_avg
-    print "Maximum Distance Avg : ", max_diff
-    for i in range(len(list_distance)):
-        if(list_distance[i][0] > diff_avg and list_distance[i][0] > max_diff):
-            print "PVC detected on", list_distance[i][1]
-    print "==================================="
+        # QRS Duration
+        x = (6.65/100)*rr
+        t_qrs = ((s_in + x)-(q_in - x))/fs
+        qrs_list.append(t_qrs)
+        print "QRS Duration : ", t_qrs
+
+        #QT Interval
+        t_qt = (t_in + (rr * 0.13) - (q_in - x))/fs
+        qt_list.append(t_qt)
+        print "QT Interval : ", t_qt
+
+        #QT Corrected
+        t_qt_corr = t_qt / (fs * math.sqrt(rr))
+        qt_corr.append(t_qt_corr)
+        print "QT Corrected : ", t_qt_corr
+
+        #Vent Rate
+        bpm = (fs/rr)*60
+        bpm_list.append(bpm)
+        print "BPM : ", bpm
+    # END LOOPING TO GAIN PQST PEAK AND IT'S INTERVAL
+
+    # LOOPING TO GAIN PQST INTERVAL MEAN
+    print "======= INTERVALS ==========="
+    print rr_list, len(rr_list)
+    rr_temp = 0; pr_temp = 0 ; qrs_temp = 0; qt_temp = 0; qtcorr_temp = 0; bpm_temp = 0
+    for k in range(len(rr_list)):
+        rr_temp     = rr_temp + rr_list[k]
+        pr_temp     = pr_temp + pr_list[k]
+        qrs_temp    = qrs_temp + qrs_list[k]
+        qt_temp     = qt_temp + qt_list[k]
+        qtcorr_temp = qtcorr_temp + qt_corr[k]
+        bpm_temp    = bpm_temp + bpm_list[k]
+
+    qtcorr_mean = float(qtcorr_temp)/float(len(qt_corr))
+    rr_mean     = float(rr_temp)/float(len(rr_list))
+    print "RR Mean  : ", rr_mean
+    print "PR Mean  : ", float(pr_temp)/float(len(pr_list))
+    print "QRS Mean : ", float(qrs_temp)/float(len(qrs_list))
+    print "QT Mean  : ", float(qt_temp)/float(len(qt_list))
+    print "QT Corr Mean : ", qtcorr_mean
+    print "BPM Mean : ", float(bpm_temp)/float(len(bpm_list))
+    # END LOOPING TO GAIN PQST INTERVAL MEAN
 
 
+    #DETECTION BY QT CORRECTION (NOVELWINDOWING2014)
+    count_normal = 0
+    count_pvc    = 0
+    for j in range(len(qt_corr)):
+        if(qt_corr[j] < qtcorr_mean ):
+            message = "PVC Detected"
+            count_pvc += 1
+        else:
+            message = "Normal"
+            count_normal += 1
+        # print "============= MESSAGE ==========="
+        # print message
+    file_result.write("====== Novel Windowing Algorithm 2014 ======\n")
+    file_result.write("Normal beat : "+ str(count_normal)+"\n")
+    file_result.write("PVC beat : "+ str(count_pvc)+"\n")
+    print "============= RESULT WINDOWING =============="
+    print "Normal beat : "+ str(count_normal)
+    print "PVC beat : "+ str(count_pvc)
 
+
+    #DETECTION PREMATURITY & COMPENSATORY PAUSE (PEDRO2014)
+    print "============= CLASSIFICATION : PEDRO 2014 ==========="
+    count_normal = 0
+    count_pvc    = 0
+    for i in range(len(rr_list)):
+        prematurity = float(rr_mean - rr_list[i])/float(rr_mean)
+        print "Prematurity ",i+1," : ", prematurity
+
+        if(i+1 < len(rr_list)):
+            compensatory_pause = float(rr_list[i+1] - rr_mean)/float(rr_mean)
+            print "Compensatory ",i+1," : ", compensatory_pause
+
+        if(prematurity > 0 and compensatory_pause < 0):
+            message = "PVC Detected"
+            count_pvc += 1
+        else:
+            message = "Normal"
+            count_normal += 1
+        # print message
+    file_result.write("====== PEDRO 2014 ======\n")
+    file_result.write("Normal beat : "+ str(count_normal) +"\n")
+    file_result.write("PVC beat : "+ str(count_pvc) +"\n")
+    print "============= RESULT PEDRO =============="
+    print "Normal beat : "+ str(count_normal)
+    print "PVC beat : "+ str(count_pvc)
+    #DETECTION BY P-T INTERVAL
+    print "======== PT INTERVAL ============"
+    print t_list, len(t_list)
+    print p_list, len(p_list)

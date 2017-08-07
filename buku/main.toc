@@ -10,29 +10,31 @@
 \contentsline {section}{\numberline {1.1}Latar Belakang}{1}
 \contentsline {section}{\numberline {1.2}Pernyataan Masalah}{2}
 \contentsline {section}{\numberline {1.3}Perumusan Masalah}{2}
-\contentsline {section}{\numberline {1.4}Tujuan}{3}
+\contentsline {section}{\numberline {1.4}Tujuan}{2}
 \contentsline {section}{\numberline {1.5}Hipotesa}{3}
 \contentsline {section}{\numberline {1.6}Ruang Lingkup}{3}
-\contentsline {section}{\numberline {1.7}Kontribusi}{3}
-\contentsline {section}{\numberline {1.8}Sistematika Penulisan}{3}
+\contentsline {section}{\numberline {1.7}Sistematika Penulisan}{3}
 \contentsline {chapter}{\numberline {II}Kajian Pustaka}{4}
-\contentsline {section}{\numberline {2.1}Premature Ventricular Contractions (PVCs)}{4}
-\contentsline {section}{\numberline {2.2}Feature Extractions}{4}
-\contentsline {section}{\numberline {2.3}Riset Deteksi PVC}{5}
-\contentsline {chapter}{\numberline {III}Metodologi dan Perancangan Sistem}{7}
-\contentsline {section}{\numberline {3.1}Metodologi}{7}
-\contentsline {subsection}{\numberline {3.1.1}Riset \textit {Framework}}{7}
-\contentsline {subsection}{\numberline {3.1.2}Data}{8}
-\contentsline {subsection}{\numberline {3.1.3}Spesifikasi Perangkat}{8}
-\contentsline {subsection}{\numberline {3.1.4}Metrik}{9}
-\contentsline {subparagraph}{Persamaan Akurasi}{9}
-\contentsline {subparagraph}{Persamaan Spesifikasi}{9}
-\contentsline {subparagraph}{Persamaan Sensitivitas}{9}
-\contentsline {subsection}{\numberline {3.1.5}Perbandingan Sistem yang Telah Ada}{9}
-\contentsline {section}{\numberline {3.2}Rancangan sistem}{9}
-\contentsline {subsection}{\numberline {3.2.1}Arsitektur}{9}
-\contentsline {subsection}{\numberline {3.2.2}Algoritma}{10}
-\contentsline {chapter}{\numberline {IV}Hasil dan Pembahasan}{11}
-\contentsline {section}{\numberline {4.1}Hasil Pengujian}{11}
-\contentsline {chapter}{Daftar Pustaka}{12}
-\contentsline {chapter}{Lampiran}{14}
+\contentsline {section}{\numberline {2.1}Sinyal Elektrokardiogram}{4}
+\contentsline {section}{\numberline {2.2}Premature Ventricular Contractions (PVC)}{5}
+\contentsline {section}{\numberline {2.3}Feature Extractions}{5}
+\contentsline {section}{\numberline {2.4}Riset Deteksi PVC}{5}
+\contentsline {chapter}{\numberline {III}Metodologi dan Perancangan Sistem}{8}
+\contentsline {section}{\numberline {3.1}Metodologi}{8}
+\contentsline {subsection}{\numberline {3.1.1}Riset \textit {Framework}}{8}
+\contentsline {subsection}{\numberline {3.1.2}Data}{9}
+\contentsline {subsection}{\numberline {3.1.3}Spesifikasi Perangkat}{9}
+\contentsline {subsection}{\numberline {3.1.4}Perbandingan Sistem yang Telah Ada}{10}
+\contentsline {section}{\numberline {3.2}Rancangan sistem}{10}
+\contentsline {subsection}{\numberline {3.2.1}Arsitektur}{10}
+\contentsline {subsection}{\numberline {3.2.2}\textit {Preprocessing}}{10}
+\contentsline {subsection}{\numberline {3.2.3}Algoritma Ekstraksi Ciri}{10}
+\contentsline {subsection}{\numberline {3.2.4}Algoritma Deteksi}{10}
+\contentsline {subsection}{\numberline {3.2.5}Pengujian}{10}
+\contentsline {subparagraph}{Persamaan Akurasi}{10}
+\contentsline {subparagraph}{Persamaan Spesifikasi}{10}
+\contentsline {subparagraph}{Persamaan Sensitivitas}{11}
+\contentsline {chapter}{\numberline {IV}Hasil dan Pembahasan}{12}
+\contentsline {section}{\numberline {4.1}Hasil Pengujian}{12}
+\contentsline {chapter}{Daftar Pustaka}{13}
+\contentsline {chapter}{Lampiran}{15}

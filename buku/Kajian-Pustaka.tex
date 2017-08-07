@@ -1,10 +1,23 @@
 \chapter{Kajian Pustaka}
 
-\section{Premature Ventricular Contractions (PVCs)}
+\section{Sinyal Elektrokardiogram}
+Sinyal elektrokardiogram (EKG) adalah sinyal analog yang merekam aktivitas listrik pada jantung. Aktivitas listrik ini berhubungan dengan impuls yang bergerak menuju jantung yang menentukan irama denyut jantung [xx]. Irama denyut jantung dapat dilihat dari pola sinyal EKG yang dihasilkan. Dalam satu gelombang EKG terdapat titik-titik fiducial, segmen, dan interval yang dapat dilihat pada gambar di bawah ini :
+
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[scale=0.5]{ekg.png}
+		\caption{Satu gelombang EKG}
+		\label{fig:ecg_signal}
+	\end{figure}
+
+Titik fiducial adalah titik-titik yang dapat digunakan sebagai pembanding terjadinya satu siklus atau denyut pada sinyal EKG [xx]. Titik-titik fiducial dalam EKG meliputi titik P,QRS,dan T seperti yang terdapat pada gambar di atas. Titik-titik fiducial ini  merepresentasikan aktivitas listrik dari jantung atrial dan ventrikel. Titik P adalah titik yang menunjukkan aktivitas kontraksi bagian atrial jantung. Segmen PR adalah bentuk sinyal depolarisasi atrial. Selanjutnya qelombang QRS adalah gelombang yang menunjukkan terjadinya kontraksi ventrikel jantung. Terkahir adalah gelombang T yang menunjukkan depolarisasi dari ventrikel.
+
+\section{Premature Ventricular Contractions (PVC)}
 Aktivitas denyut jantung yang terjadi pada manusia adalah disebabkan terjadinya aktivitas elektrik jantung yang dilakukan oleh SA-Node dan AV-node\cite{heart_act}. SA-node atau Sino-Atrial Node adalah bagian kecil dari jaringan jantung yang terdapat di bagian atrial dan berfungsi untuk melakukan pelepasan electron yang kemudian akan memacu atrial berkontraksi. Selanjutnya elektron yang dilepaskan oleh SA-node akan ditangkap oleh AV-node melalui jaringan-jaringan kecil di jantung yang kemudian akan dilepaskan kembali oleh AV-node sehingga membuat bagian ventrikel jantung bekontraksi \cite{khandait2012}. Aktifitas-aktifitas pelepasan elektron yang dilakukan oleh SA-node dan AV-node ini lah yang kemudian membuat jantung berdenyut secara ritmik dan teratur. PVC adalah salah satu kelainan jantung yang disebabkan karena ketidaknormalan denyut jantung. Pada PVC, ventrikel berkontraksi secara prematur atau melepaskan elektron sebelum menerima elektron yang dikirimkan oleh SA-node\cite{Kanwar2015}.
 
 \section{Feature Extractions}
 \textit{Feature extraction} adalah tahap awal yang dilakukan pada proses deteksi kelainan jantung setelah tahap pre-prosessing pada sinyal EKG. Tahap \textit{feature extraction} ini bertujuan untuk mendapatkan titik P, QRS,T dan nilai-nilai penting lainnya pada gelombang EKG. Nilai-nilai gelombang ini kemudian akan menjadi nilai masukan pada tahap klasifikasi dan dilakukan analisis terhadap nilai-nilai gelombang tersebut. Tingkat akurasi yang dihasilkan pada tahap \textit{feature extraction} cukup menentukan nilai akurasi akhir pada keseluruhan proses deteksi PVC\cite{Huang2015Thesis}. Selain itu \textit{feature extraction} yang baik juga akan membuat proses diagnosa menjadi lebih efisien\cite{Karpagachelvi2010,Chang1987,UMaji}. Karena itu menggunakan algoritma yang sederhana namun tetap mempertahankan akurasi yang optimal dalam tahap \textit{feature extraction} menjadi sangat penting.
+
 
 \section{Riset Deteksi PVC}
 Tahun 1987, Chang\cite{Chang1987} telah mengusulkan sebuah algoritma \textit{feature extraction} yang dapat digunakan secara real-time dan berbasis \textit{microprocessor}. Setelah diujikan kepada 18 orang pasien metode ini mencapai nilai akurasi sebesar 99,3 persen dan sensitivitas 81,12 persen.
